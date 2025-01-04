@@ -10,7 +10,7 @@ use App\Http\Controllers\LectureController;
 use App\Http\Controllers\BatchController;
 use App\Http\Controllers\SlotController;
 use App\Http\Controllers\AssigntomoduleController;
-
+use App\Http\Controllers\DashBoardController;
 use App\Http\Controllers\Attendance_OtpController;
 use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\Attendance_StudentTimetableController;
@@ -20,6 +20,12 @@ use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\TimetableController;
 
 use App\Http\Controllers\AuthController;
+
+use App\Http\Controllers\StudentController;
+
+
+use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PaymentController;
 
 Route::get('/notification', [NotificationController::class, 'checkNotification']);
 
@@ -96,3 +102,23 @@ Route::post('/login', [AuthController::class, 'login']);
 
 
 Route::get('/departmentm/{department_id}', [ModuleController::class, 'filterByDepartment']);
+
+
+//group c 
+Route::get('/getstudents',[StudentController::class,'index']);
+Route::post('/addStudent',[StudentController::class,'savestudents']);
+Route::post('/putstudent/{id}',[StudentController::class,'updateStudent']);
+Route::delete('/students/{id}',[StudentController::class,'destroy']);
+Route::get('/digitalid',[StudentController::class,'digitalid']);
+
+Route::get('/dashboardDetails',[DashBoardController::class,'index']);
+Route::post('/Oauth/login',[LoginController::class,'login']);
+
+
+Route::prefix('payment')->group(function () {
+
+    Route::get('/getStudentDetails/{id}',[PaymentController::class,'search']);
+    Route::post('/payPayment',[PaymentController::class,'payPayment']);
+
+});
+
